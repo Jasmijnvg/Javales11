@@ -12,35 +12,37 @@ import java.util.List;
 import java.util.Map;
 
 @RestController
-@RequestMapping("/api")
+@RequestMapping("/api/televisions")
 public class TelevisionController {
 
     List<String> televisions = new ArrayList<>();
 
-    @GetMapping("/televisions")
+    @GetMapping()
     public ResponseEntity<List<String>> getAllTelevisions() {
         return ResponseEntity.ok(televisions);
     }
 
-    @GetMapping("/televisions/{id}")
+    @GetMapping("/{id}")
     public ResponseEntity<Object> getTelevision(@PathVariable int id) {
         return ResponseEntity.ok(televisions.get(id));
     }
 
-    @PostMapping("/televisions")
+    @PostMapping()
     public ResponseEntity<Object> addTelevision(@RequestBody String televisionName) {
         televisions.add(televisionName);
         URI location = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(televisions.size()-1).toUri();
         return ResponseEntity.created(location).build();
     }
 
-    @PutMapping("televisions/{id}")
+    @PutMapping("/{id}")
     public ResponseEntity<Object> updateTelevision(@PathVariable int id, @RequestBody String televisionName) {
+        televisions.set(id, televisionName);
         return ResponseEntity.noContent().build();
     }
 
-    @DeleteMapping("television/{id}")
+    @DeleteMapping("/{id}")
     public ResponseEntity<Object> deleteTelevision(@PathVariable int id) {
+        televisions.remove(id);
         return ResponseEntity.noContent().build();
     }
 

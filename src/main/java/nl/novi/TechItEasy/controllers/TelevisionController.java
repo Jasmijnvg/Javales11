@@ -1,5 +1,7 @@
 package nl.novi.TechItEasy.controllers;
 
+import nl.novi.TechItEasy.models.Television;
+import nl.novi.TechItEasy.services.TelevisionService;
 import org.apache.coyote.Response;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -15,34 +17,38 @@ import java.util.Map;
 @RequestMapping("/api/televisions")
 public class TelevisionController {
 
-    List<String> televisions = new ArrayList<>();
+    private final TelevisionService televisionService;
+
+    public TelevisionController(TelevisionService televisionService) {
+        this.televisionService = televisionService;
+    }
 
     @GetMapping()
-    public ResponseEntity<List<String>> getAllTelevisions() {
-        return ResponseEntity.ok(televisions);
+    public ResponseEntity<List<Television>> getAllTelevisions() {
+        return ResponseEntity.ok(televisionService.getAllTelevisions());
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Object> getTelevision(@PathVariable int id) {
-        return ResponseEntity.ok(televisions.get(id));
+    public ResponseEntity<Television> getTelevision(@PathVariable int id) {
+        return ResponseEntity.ok(televisionService.getTelevisionById(id));
     }
 
     @PostMapping()
-    public ResponseEntity<Object> addTelevision(@RequestBody String televisionName) {
-        televisions.add(televisionName);
-        URI location = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(televisions.size()-1).toUri();
-        return ResponseEntity.created(location).build();
+    public ResponseEntity<Television> addTelevision(@RequestBody Television television) {
+        Television t = televisionService.saveTelevision(television);
+        URI location = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(t.id).toUri();
+        return ResponseEntity.created(location).body(t);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Object> updateTelevision(@PathVariable int id, @RequestBody String televisionName) {
-        televisions.set(id, televisionName);
+    public ResponseEntity<Object> updateTelevision(@PathVariable int id, @RequestBody Television television) {
+        televisionService.updateTelevision(id, television);
         return ResponseEntity.noContent().build();
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Object> deleteTelevision(@PathVariable int id) {
-        televisions.remove(id);
+    public ResponseEntity<Void> deleteTelevision(@PathVariable int id) {
+        televisionService.deleteTelevision(id);
         return ResponseEntity.noContent().build();
     }
 

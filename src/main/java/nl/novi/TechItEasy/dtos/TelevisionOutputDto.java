@@ -8,7 +8,6 @@ import lombok.Setter;
 @Setter
 public class TelevisionOutputDto {
 
-    @Setter(AccessLevel.NONE)
     public int id;
 
     private String type;

@@ -2,11 +2,13 @@ package nl.novi.TechItEasy.services;
 
 import nl.novi.TechItEasy.dtos.TelevisionOutputDto;
 import nl.novi.TechItEasy.dtos.TelevisionInputDto;
+import nl.novi.TechItEasy.exceptions.RecordNotFoundException;
 import nl.novi.TechItEasy.models.Television;
 import nl.novi.TechItEasy.repositories.TelevisionRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -21,37 +23,46 @@ public class TelevisionService {
     public List<TelevisionOutputDto> getAllTelevisions() {
         return televisionRepository.findAll()
                 .stream()
-                .map(TelevisionService::toTelevisionDto)
+                .map((x)->toTelevisionDto(x))
                 .collect(Collectors.toList());
     }
 
     public TelevisionOutputDto getTelevisionById(int id) {
-        Television t = televisionRepository.findById(id).get();
-        return toTelevisionDto(t);
+        Optional<Television> optionalTelevision = televisionRepository.findById(id);
+        if (optionalTelevision.isPresent()) {
+            Television t = optionalTelevision.get();
+            return toTelevisionDto(t);
+        }
+        else{
+            throw new RecordNotFoundException(id+" not found");
+        }
     }
 
     public TelevisionOutputDto saveTelevision(TelevisionInputDto television) {
         Television t = toTelevision(television);
-        televisionRepository.save(t);
-        return toTelevisionDto(t);
+        Television tv =televisionRepository.save(t);
+        return toTelevisionDto(tv);
     }
 
     public void deleteTelevision(int id) {
-        televisionRepository.deleteById(id);
+        if (televisionRepository.existsById(id)) {
+            televisionRepository.deleteById(id);
+        }
+        else{
+            throw new RecordNotFoundException(id+" not found");
+        }
     }
 
     public TelevisionOutputDto updateTelevision(int id, TelevisionInputDto newTv) {
         Television t = toTelevision(newTv);
-        t.setId(id);
-        televisionRepository.save(t);
-
-
-        return toTelevisionDto(t);
+        Television tv =televisionRepository.save(t);
+        return toTelevisionDto(tv);
     }
 
     public static TelevisionOutputDto toTelevisionDto(Television television){
         var dto = new TelevisionOutputDto();
 
+        dto.setId(television.getId());
         dto.setType(television.getType());
         dto.setBrand(television.getBrand());
         dto.setName(television.getName());

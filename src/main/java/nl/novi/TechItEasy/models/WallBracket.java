@@ -14,20 +14,11 @@ public class WallBracket {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    public int id;
+    public Long id;
 
     private String size;
     private Boolean adjustable;
     private String name;
     private Double price;
 
-    public WallBracket() {
-    }
-
-    public WallBracket(String size, Boolean adjustable, String name, Double price) {
-        this.size = size;
-        this.adjustable = adjustable;
-        this.name = name;
-        this.price = price;
-    }
 }

@@ -14,18 +14,10 @@ public class CIModule {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    public int id;
+    public Long id;
 
     private String name;
     private String type;
     private Double price;
 
-    public CIModule() {
-    }
-
-    public CIModule(String name, String type, Double price) {
-        this.name = name;
-        this.type = type;
-        this.price = price;
-    }
 }

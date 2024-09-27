@@ -1,14 +1,11 @@
 package nl.novi.TechItEasy.dtos;
 
-import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.Setter;
 
 @Getter
 @Setter
 public class TelevisionInputDto {
-    @Setter(AccessLevel.NONE)
-    public int id;
 
     private String type;
     private String brand;

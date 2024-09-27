@@ -14,7 +14,7 @@ public class RemoteController {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    public int id;
+    public Long id;
 
     private String compatibleWith;
     private String batteryType;

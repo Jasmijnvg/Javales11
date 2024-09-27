@@ -55,9 +55,12 @@ public class TelevisionService {
 
     public TelevisionOutputDto updateTelevision(int id, TelevisionInputDto newTv) {
         Television t = toTelevision(newTv);
+        t.setId(id);
         Television tv =televisionRepository.save(t);
         return toTelevisionDto(tv);
     }
+
+
 
     public static TelevisionOutputDto toTelevisionDto(Television television){
         var dto = new TelevisionOutputDto();

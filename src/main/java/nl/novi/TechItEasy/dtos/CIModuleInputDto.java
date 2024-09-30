@@ -10,4 +10,7 @@ public class CIModuleInputDto {
     private String name;
     private String type;
     private Double price;
+
+    public CIModuleInputDto() {
+    }
 }

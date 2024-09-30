@@ -11,4 +11,7 @@ public class CIModuleOutputDto {
     private String name;
     private String type;
     private Double price;
+
+    public CIModuleOutputDto() {
+    }
 }

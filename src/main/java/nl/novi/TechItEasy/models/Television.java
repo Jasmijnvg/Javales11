@@ -31,7 +31,7 @@ public class Television {
     private Integer sold;
 
     @ManyToOne
-    @JoinColumn(name="ci_module_id", nullable = true)
+    @JoinColumn(name="ci_module_id")
     private CIModule ciModule;
 
 }

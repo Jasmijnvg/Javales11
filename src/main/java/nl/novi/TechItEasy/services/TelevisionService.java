@@ -110,10 +110,12 @@ public class TelevisionService {
         dto.setAmbiLight(television.getAmbiLight());
         dto.setOriginalStock(television.getOriginalStock());
         dto.setSold(television.getSold());
-        dto.setCiModuleDto(CIModuleService.toCIModuleDto(television.getCiModule()));
+        if(television.getCiModule()!=null) {
+            dto.setCiModule(CIModuleService.toCIModuleDto(television.getCiModule()));
+        }
 
         return dto;
-    }
+        }
 
     public Television toTelevision(TelevisionInputDto dto) {
         var television = new Television();

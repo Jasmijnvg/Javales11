@@ -1,9 +1,6 @@
 package nl.novi.TechItEasy.models;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -32,6 +29,11 @@ public class Television {
     private Boolean ambiLight;
     private Integer originalStock;
     private Integer sold;
+
+    @ManyToOne
+    @JoinColumn(name="ci_module_id")
+    private CIModule ciModule;
+
 }
 
 

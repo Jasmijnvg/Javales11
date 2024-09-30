@@ -51,6 +51,13 @@ public class TelevisionController {
         return ResponseEntity.noContent().build();
     }
 
+    @PutMapping("/{id}/cimodule/{cimoduleid}")
+    public ResponseEntity<Void> addCimodule(@PathVariable int id, @PathVariable int cimoduleid) {
+        televisionService.assignCIModuleToTelevision(id, cimoduleid);
+        return ResponseEntity.ok().build();
+    }
+
+
 
 
 }

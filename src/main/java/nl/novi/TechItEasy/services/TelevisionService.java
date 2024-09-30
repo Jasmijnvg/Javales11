@@ -3,7 +3,9 @@ package nl.novi.TechItEasy.services;
 import nl.novi.TechItEasy.dtos.TelevisionOutputDto;
 import nl.novi.TechItEasy.dtos.TelevisionInputDto;
 import nl.novi.TechItEasy.exceptions.RecordNotFoundException;
+import nl.novi.TechItEasy.models.CIModule;
 import nl.novi.TechItEasy.models.Television;
+import nl.novi.TechItEasy.repositories.CIModuleRepository;
 import nl.novi.TechItEasy.repositories.TelevisionRepository;
 import org.springframework.stereotype.Service;
 
@@ -16,8 +18,11 @@ public class TelevisionService {
 
 
     private final TelevisionRepository televisionRepository;
-    public TelevisionService(TelevisionRepository televisionRepository) {
+    private final CIModuleRepository ciModuleRepository;
+
+    public TelevisionService(TelevisionRepository televisionRepository, CIModuleRepository ciModuleRepository) {
         this.televisionRepository=televisionRepository;
+        this.ciModuleRepository = ciModuleRepository;
     }
 
     public List<TelevisionOutputDto> getAllTelevisions() {
@@ -60,6 +65,29 @@ public class TelevisionService {
         return toTelevisionDto(tv);
     }
 
+    public Television assignCIModuleToTelevision(int televisionId, long ciModuleId){
+        Optional<Television> optionalTelevision = televisionRepository.findById(televisionId);
+        Optional<CIModule> optionalCIModule = ciModuleRepository.findById(ciModuleId);
+        if (optionalCIModule.isEmpty()) {
+            throw new RecordNotFoundException(televisionId + " not found");
+        }
+
+        if (optionalTelevision.isEmpty()) {
+            throw new RecordNotFoundException(televisionId + " not found");
+        }
+
+        CIModule ciModule = optionalCIModule.get();
+        Television television = optionalTelevision.get();
+
+        ciModule.getTelevisions().add(television);
+        television.setCiModule(ciModule);
+
+        ciModuleRepository.save(ciModule);
+        televisionRepository.save(television);
+
+        return television;
+    }
+
 
 
     public static TelevisionOutputDto toTelevisionDto(Television television){
@@ -82,6 +110,7 @@ public class TelevisionService {
         dto.setAmbiLight(television.getAmbiLight());
         dto.setOriginalStock(television.getOriginalStock());
         dto.setSold(television.getSold());
+        dto.setCiModuleDto(CIModuleService.toCIModuleDto(television.getCiModule()));
 
         return dto;
     }

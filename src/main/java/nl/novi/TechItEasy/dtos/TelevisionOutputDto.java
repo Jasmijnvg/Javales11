@@ -26,6 +26,7 @@ public class TelevisionOutputDto {
     private Boolean ambiLight;
     private Integer originalStock;
     private Integer sold;
+    public CIModuleOutputDto ciModuleDto;
 
     public TelevisionOutputDto() {
     }

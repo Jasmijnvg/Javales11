@@ -42,12 +42,6 @@ public class Television {
     private CIModule ciModule;
 
     @ManyToMany(mappedBy = "televisions")
-//    @JoinTable(
-//            name="television_wallbracket",
-//            joinColumns = @JoinColumn(name="wallbracket_id"),
-//            inverseJoinColumns = @JoinColumn(name="television_id")
-//    )
-//    List<WallBracket> wallBrackets;
     private List<WallBracket> wallBrackets = new ArrayList<>();
 
 }

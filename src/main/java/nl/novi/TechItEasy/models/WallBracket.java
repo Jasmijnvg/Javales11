@@ -30,8 +30,4 @@ public class WallBracket {
             inverseJoinColumns = @JoinColumn(name = "television_id")
             )
     private List<Television> televisions = new ArrayList<>();
-//    private Set<Television> televisions = new HashSet<>();
-
-//    List<Television> televisions;
-
 }

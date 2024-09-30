@@ -99,26 +99,10 @@ public class TelevisionService {
     public void assignRemoteControllerToTelevision(int televisionId, long remoteControllerId){
         Television television = televisionRepository.findById(televisionId).orElseThrow(() -> new RecordNotFoundException(televisionId + " not found"));
         RemoteController remoteController = remoteControllerRepository.findById(remoteControllerId).orElseThrow(() -> new RecordNotFoundException(remoteControllerId + " not found"));
-//       Old code:
-//        Optional<Television> optionalTelevision = televisionRepository.findById(televisionId);
-//        Optional<RemoteController> optionalRemoteController = remoteControllerRepository.findById(remoteControllerId);
-//        if (optionalRemoteController.isEmpty()) {
-//            throw new RecordNotFoundException(remoteControllerId + " not found");
-//        }
-//
-//        if (optionalTelevision.isEmpty()) {
-//            throw new RecordNotFoundException(televisionId + " not found");
-//        }
-//
-//        RemoteController remoteController = RemoteController.get();
-//        Television television = Television.get();
 
         television.setRemoteController(remoteController);
 
         remoteControllerRepository.save(remoteController);
-//        televisionRepository.save(television);
-
-//        return television;
     }
 
     public void assignWallBracketToTelevision(int televisionId, long wallbracketid) {
@@ -157,7 +141,6 @@ public class TelevisionService {
             dto.setRemoteController(RemoteControllerService.toRemoteControllerDto(television.getRemoteController()));
         }
         if(television.getWallBrackets()!=null) {
-//            dto.setWallBracket(WallBracketService.toWallBracketDto(television.getWallBrackets()));
             dto.setWallbrackets(
                     television.getWallBrackets()
                             .stream()

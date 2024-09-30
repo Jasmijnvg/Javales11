@@ -11,7 +11,7 @@ import java.net.URI;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/CIModule")
+@RequestMapping("/api/cimodule")
 public class CIModuleController {
 
     private final CIModuleService ciModuleService;

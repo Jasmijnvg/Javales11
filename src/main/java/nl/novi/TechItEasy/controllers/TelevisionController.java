@@ -63,5 +63,10 @@ public class TelevisionController {
         return ResponseEntity.noContent().build();
     }
 
+    @PutMapping("/{id}/wallbracket/{wallbracketid}")
+    public ResponseEntity<Void> addWallBracket(@PathVariable int id, @PathVariable long wallbracketid) {
+        televisionService.assignWallBracketToTelevision(id, wallbracketid);
+        return ResponseEntity.noContent().build();
+    }
 
 }

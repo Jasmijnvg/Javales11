@@ -4,6 +4,9 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Entity
 @Getter
 @Setter
@@ -37,6 +40,15 @@ public class Television {
     @ManyToOne
     @JoinColumn(name="ci_module_id")
     private CIModule ciModule;
+
+    @ManyToMany(mappedBy = "televisions")
+//    @JoinTable(
+//            name="television_wallbracket",
+//            joinColumns = @JoinColumn(name="wallbracket_id"),
+//            inverseJoinColumns = @JoinColumn(name="television_id")
+//    )
+//    List<WallBracket> wallBrackets;
+    private List<WallBracket> wallBrackets = new ArrayList<>();
 
 }
 

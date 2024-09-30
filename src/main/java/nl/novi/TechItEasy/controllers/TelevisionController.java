@@ -52,12 +52,21 @@ public class TelevisionController {
     }
 
     @PutMapping("/{id}/cimodule/{cimoduleid}")
-    public ResponseEntity<Void> addCimodule(@PathVariable int id, @PathVariable int cimoduleid) {
+    public ResponseEntity<Void> addCimodule(@PathVariable int id, @PathVariable long cimoduleid) {
         televisionService.assignCIModuleToTelevision(id, cimoduleid);
         return ResponseEntity.ok().build();
     }
 
+    @PutMapping("/{id}/remotecontroller/{remotecontrollerid}")
+    public ResponseEntity<Void> addRemoteController(@PathVariable int id, @PathVariable long remotecontrollerid) {
+        televisionService.assignRemoteControllerToTelevision(id, remotecontrollerid);
+        return ResponseEntity.noContent().build();
+    }
 
-
+    @PutMapping("/{id}/wallbracket/{wallbracketid}")
+    public ResponseEntity<Void> addWallBracket(@PathVariable int id, @PathVariable long wallbracketid) {
+        televisionService.assignWallBracketToTelevision(id, wallbracketid);
+        return ResponseEntity.noContent().build();
+    }
 
 }

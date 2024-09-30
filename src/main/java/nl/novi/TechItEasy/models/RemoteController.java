@@ -1,9 +1,6 @@
 package nl.novi.TechItEasy.models;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -22,5 +19,8 @@ public class RemoteController {
     private String brand;
     private Double price;
     private Integer originalStock;
+
+    @OneToOne(mappedBy = "remoteController")
+    Television television;
 
 }

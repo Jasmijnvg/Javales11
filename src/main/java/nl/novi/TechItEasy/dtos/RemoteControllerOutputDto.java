@@ -15,4 +15,6 @@ public class RemoteControllerOutputDto {
     private Double price;
     private Integer originalStock;
 
+    public RemoteControllerOutputDto() {
+    }
 }

@@ -27,6 +27,7 @@ public class TelevisionOutputDto {
     private Integer originalStock;
     private Integer sold;
     public CIModuleOutputDto ciModule;
+    public RemoteControllerOutputDto remoteController;
 
     public TelevisionOutputDto() {
     }

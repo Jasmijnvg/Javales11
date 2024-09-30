@@ -30,6 +30,10 @@ public class Television {
     private Integer originalStock;
     private Integer sold;
 
+    @OneToOne
+    @JoinColumn(name="remote_controller_id")
+    private RemoteController remoteController;
+
     @ManyToOne
     @JoinColumn(name="ci_module_id")
     private CIModule ciModule;

@@ -4,8 +4,10 @@ import nl.novi.TechItEasy.dtos.TelevisionOutputDto;
 import nl.novi.TechItEasy.dtos.TelevisionInputDto;
 import nl.novi.TechItEasy.exceptions.RecordNotFoundException;
 import nl.novi.TechItEasy.models.CIModule;
+import nl.novi.TechItEasy.models.RemoteController;
 import nl.novi.TechItEasy.models.Television;
 import nl.novi.TechItEasy.repositories.CIModuleRepository;
+import nl.novi.TechItEasy.repositories.RemoteControllerRepository;
 import nl.novi.TechItEasy.repositories.TelevisionRepository;
 import org.springframework.stereotype.Service;
 
@@ -19,10 +21,12 @@ public class TelevisionService {
 
     private final TelevisionRepository televisionRepository;
     private final CIModuleRepository ciModuleRepository;
+    private final RemoteControllerRepository remoteControllerRepository;
 
-    public TelevisionService(TelevisionRepository televisionRepository, CIModuleRepository ciModuleRepository) {
+    public TelevisionService(TelevisionRepository televisionRepository, CIModuleRepository ciModuleRepository, RemoteControllerRepository remoteControllerRepository) {
         this.televisionRepository=televisionRepository;
         this.ciModuleRepository = ciModuleRepository;
+        this.remoteControllerRepository = remoteControllerRepository;
     }
 
     public List<TelevisionOutputDto> getAllTelevisions() {
@@ -88,6 +92,30 @@ public class TelevisionService {
         return television;
     }
 
+    public void assignRemoteControllerToTelevision(int televisionId, long remoteControllerId){
+        Television television = televisionRepository.findById(televisionId).orElseThrow(() -> new RecordNotFoundException(televisionId + " not found"));
+        RemoteController remoteController = remoteControllerRepository.findById(remoteControllerId).orElseThrow(() -> new RecordNotFoundException(remoteControllerId + " not found"));
+//       Old code:
+//        Optional<Television> optionalTelevision = televisionRepository.findById(televisionId);
+//        Optional<RemoteController> optionalRemoteController = remoteControllerRepository.findById(remoteControllerId);
+//        if (optionalRemoteController.isEmpty()) {
+//            throw new RecordNotFoundException(remoteControllerId + " not found");
+//        }
+//
+//        if (optionalTelevision.isEmpty()) {
+//            throw new RecordNotFoundException(televisionId + " not found");
+//        }
+//
+//        RemoteController remoteController = RemoteController.get();
+//        Television television = Television.get();
+
+        television.setRemoteController(remoteController);
+
+        remoteControllerRepository.save(remoteController);
+//        televisionRepository.save(television);
+
+//        return television;
+    }
 
 
     public static TelevisionOutputDto toTelevisionDto(Television television){
@@ -112,6 +140,9 @@ public class TelevisionService {
         dto.setSold(television.getSold());
         if(television.getCiModule()!=null) {
             dto.setCiModule(CIModuleService.toCIModuleDto(television.getCiModule()));
+        }
+        if(television.getRemoteController()!=null) {
+            dto.setRemoteController(RemoteControllerService.toRemoteControllerDto(television.getRemoteController()));
         }
 
         return dto;

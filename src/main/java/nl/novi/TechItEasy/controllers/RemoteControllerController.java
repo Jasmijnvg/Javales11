@@ -11,7 +11,7 @@ import java.net.URI;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/RemoteController")
+@RequestMapping("/api/remotecontroller")
 public class RemoteControllerController {
 
     private final RemoteControllerService remoteControllerService;
